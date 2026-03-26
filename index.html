@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>مجمع تحفيظ القرآن | نظام الإدارة المتكامل</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bootstrap-4/bootstrap-4.min.css" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
+      color: #1e293b;
+    }
+    .navbar {
+      background: rgba(255,255,255,0.98);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+    }
+    .navbar-brand {
+      font-weight: 900;
+      font-size: 1.5rem;
+      background: linear-gradient(135deg, #0f3b2c, #1a5f3e);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .hero-section {
+      min-height: 85vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-section::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(15,59,44,0.03) 0%, transparent 70%);
+      animation: rotate 30s linear infinite;
+    }
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .hero-card {
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 2rem;
+      padding: 2.5rem;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+      border: 1px solid rgba(15,59,44,0.1);
+      transition: transform 0.3s ease;
+    }
+    .hero-card:hover { transform: translateY(-5px); }
+    .hero-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #0f3b2c, #1a5f3e);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 2rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+    }
+    .hero-title {
+      font-size: 2.8rem;
+      font-weight: 900;
+      line-height: 1.3;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, #0f3b2c, #2d6a4f);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .portal-card {
+      background: white;
+      border-radius: 1.5rem;
+      padding: 1.8rem;
+      text-align: center;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border: 1px solid rgba(0,0,0,0.05);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+    .portal-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 30px rgba(0,0,0,0.1);
+      border-color: rgba(15,59,44,0.2);
+    }
+    .portal-icon {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #f0f7f4, #e8f0ec);
+      border-radius: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.2rem;
+    }
+    .portal-icon i { font-size: 2.5rem; color: #1a5f3e; }
+    .portal-title { font-size: 1.3rem; font-weight: 800; margin-bottom: 0.5rem; }
+    .portal-desc { font-size: 0.9rem; color: #6c757d; }
+    .stats-section {
+      background: white;
+      border-radius: 2rem;
+      padding: 2rem;
+      margin-top: 2rem;
+    }
+    .stat-item {
+      text-align: center;
+      padding: 1rem;
+    }
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 900;
+      color: #1a5f3e;
+    }
+    .stat-label {
+      font-size: 0.9rem;
+      color: #6c757d;
+      font-weight: 500;
+    }
+    .footer {
+      background: #0f3b2c;
+      color: white;
+      padding: 2rem;
+      margin-top: 3rem;
+    }
+    @media (max-width: 768px) {
+      .hero-title { font-size: 1.8rem; }
+      .hero-card { padding: 1.5rem; }
+      .portal-card { padding: 1.2rem; }
+      .portal-icon { width: 60px; height: 60px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg sticky-top">
+  <div class="container">
+    <a class="navbar-brand" href="index.html">
+      <i class="fa-solid fa-book-quran ms-2"></i>
+      مجمع تحفيظ القرآن
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link active" href="index.html">الرئيسية</a></li>
+        <li class="nav-item"><a class="nav-link" href="register.html">تسجيل طالب</a></li>
+        <li class="nav-item"><a class="nav-link" href="student-lookup.html">بيانات الطالب</a></li>
+        <li class="nav-item"><a class="nav-link" href="staff-login.html">بوابة العاملين</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<section class="hero-section">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-7">
+        <div class="hero-card">
+          <div class="hero-badge">
+            <i class="fa-solid fa-crown ms-1"></i> نظام إدارة متكامل
+          </div>
+          <h1 class="hero-title">نظام متكامل لإدارة مجمع تحفيظ القرآن</h1>
+          <p class="text-muted mb-4 lead">
+            منصة شاملة لإدارة الطلاب والحلق والإنذارات، مع واجهة عربية حديثة وتقارير فورية وتواصل مباشر عبر واتساب.
+          </p>
+          <div class="d-flex gap-3 flex-wrap">
+            <a href="register.html" class="btn btn-success btn-lg px-4">
+              <i class="fa-solid fa-user-plus ms-2"></i>تسجيل طالب جديد
+            </a>
+            <a href="staff-login.html" class="btn btn-outline-success btn-lg px-4">
+              <i class="fa-solid fa-users ms-2"></i>بوابة العاملين
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-5">
+        <div class="row g-3">
+          <div class="col-6">
+            <div class="portal-card" onclick="location.href='register.html'">
+              <div class="portal-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+              <div class="portal-title">تسجيل جديد</div>
+              <div class="portal-desc">تقديم طلب الالتحاق</div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="portal-card" onclick="location.href='student-lookup.html'">
+              <div class="portal-icon"><i class="fa-solid fa-id-card"></i></div>
+              <div class="portal-title">بيانات الطالب</div>
+              <div class="portal-desc">استعلام وتحديث</div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="portal-card" onclick="location.href='staff-login.html'">
+              <div class="portal-icon"><i class="fa-solid fa-chalkboard-user"></i></div>
+              <div class="portal-title">بوابة العاملين</div>
+              <div class="portal-desc">دخول الموظفين</div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="portal-card" onclick="alert('سيتم إطلاقها قريباً')">
+              <div class="portal-icon"><i class="fa-solid fa-chart-line"></i></div>
+              <div class="portal-title">إنجازات المجمع</div>
+              <div class="portal-desc">قريباً</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="container">
+  <div class="stats-section">
+    <div class="row" id="homeStats">
+      <div class="col-md-3 col-6 stat-item">
+        <div class="stat-number" id="statStudents">-</div>
+        <div class="stat-label">إجمالي الطلاب</div>
+      </div>
+      <div class="col-md-3 col-6 stat-item">
+        <div class="stat-number" id="statCircles">-</div>
+        <div class="stat-label">عدد الحلق</div>
+      </div>
+      <div class="col-md-3 col-6 stat-item">
+        <div class="stat-number" id="statTeachers">-</div>
+        <div class="stat-label">المعلمون</div>
+      </div>
+      <div class="col-md-3 col-6 stat-item">
+        <div class="stat-number" id="statWarnings">-</div>
+        <div class="stat-label">إنذارات نشطة</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer text-center">
+  <div class="container">
+    <p class="mb-0">© 2025 مجمع تحفيظ القرآن - جميع الحقوق محفوظة</p>
+    <small class="opacity-75">نظام إدارة متكامل لحلق تحفيظ القرآن الكريم</small>
+  </div>
+</footer>
+
+<script src="config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+  async function loadHomeStats() {
+    try {
+      const response = await fetch(API_URL + '?action=getPublicStats');
+      const data = await response.json();
+      if (data.success) {
+        document.getElementById('statStudents').textContent = data.data.totalStudents || '0';
+        document.getElementById('statCircles').textContent = data.data.totalCircles || '0';
+        document.getElementById('statTeachers').textContent = data.data.totalTeachers || '0';
+        document.getElementById('statWarnings').textContent = data.data.activeWarnings || '0';
+      }
+    } catch(e) { console.error(e); }
+  }
+  loadHomeStats();
+</script>
+</body>
+</html>
