@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>لوحة التحكم | مجمع تحفيظ القرآن</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+  <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="globalLoader" class="global-loader d-none">
+  <div class="spinner-border text-light" role="status"></div>
+  <div class="mt-3">جاري تحميل البيانات...</div>
+</div>
+
+<nav class="navbar navbar-expand-lg bg-white shadow-sm sticky-top">
+  <div class="container">
+    <a class="navbar-brand fw-bold text-success" href="dashboard.html">
+      <i class="fa-solid fa-book-quran ms-2"></i>مجمع تحفيظ القرآن
+    </a>
+    <div class="ms-auto d-flex gap-2 align-items-center">
+      <span class="badge bg-success px-3 py-2" id="userRoleBadge"></span>
+      <span class="text-muted" id="userNameDisplay"></span>
+      <button class="btn btn-outline-danger btn-sm" id="logoutBtn">
+        <i class="fa-solid fa-sign-out-alt ms-1"></i>خروج
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div class="container-fluid py-4">
+  <div class="row">
+    <div class="col-md-3 col-lg-2 mb-3">
+      <div class="list-group shadow-sm rounded-3" id="sidebarMenu">
+        <a href="#" class="list-group-item list-group-item-action active" data-tab="dashboard">
+          <i class="fa-solid fa-chart-line ms-2"></i>لوحة المعلومات
+        </a>
+        <a href="#" class="list-group-item list-group-item-action" data-tab="students">
+          <i class="fa-solid fa-users ms-2"></i>إدارة الطلاب
+        </a>
+        <a href="#" class="list-group-item list-group-item-action" data-tab="requests" id="requestsTabBtn">
+          <i class="fa-solid fa-inbox ms-2"></i>الطلبات الواردة
+        </a>
+        <a href="#" class="list-group-item list-group-item-action" data-tab="educational-warnings">
+          <i class="fa-solid fa-triangle-exclamation ms-2"></i>الإنذارات التعليمية
+        </a>
+        <a href="#" class="list-group-item list-group-item-action" data-tab="admin-warnings">
+          <i class="fa-solid fa-clock ms-2"></i>الإنذارات الإدارية
+        </a>
+        <a href="#" class="list-group-item list-group-item-action" data-tab="all-warnings">
+          <i class="fa-solid fa-list ms-2"></i>الإنذارات كاملة
+        </a>
+        <a href="#" class="list-group-item list-group-item-action" data-tab="settings" id="settingsTabBtn">
+          <i class="fa-solid fa-gear ms-2"></i>الإعدادات
+        </a>
+        <a href="#" class="list-group-item list-group-item-action" data-tab="teacher-notes" id="teacherNotesTabBtn">
+          <i class="fa-solid fa-pen ms-2"></i>ملاحظاتي
+        </a>
+      </div>
+    </div>
+
+    <div class="col-md-9 col-lg-10">
+      <div id="dashboardTab" class="tab-content-area">
+        <div class="row g-3 mb-4" id="statsCards"></div>
+        <div class="card shadow-sm rounded-3" id="recentActivities"></div>
+      </div>
+      <div id="studentsTab" class="tab-content-area d-none"></div>
+      <div id="requestsTab" class="tab-content-area d-none"></div>
+      <div id="educationalWarningsTab" class="tab-content-area d-none"></div>
+      <div id="adminWarningsTab" class="tab-content-area d-none"></div>
+      <div id="allWarningsTab" class="tab-content-area d-none"></div>
+      <div id="settingsTab" class="tab-content-area d-none"></div>
+      <div id="teacherNotesTab" class="tab-content-area d-none"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Student Edit Modal -->
+<div class="modal fade" id="studentEditModal" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-success text-white">
+        <h5 class="modal-title"><i class="fa-solid fa-user-edit ms-2"></i>تعديل بيانات الطالب</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body" id="studentEditForm"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Add Warning Modal -->
+<div class="modal fade" id="addWarningModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-warning">
+        <h5 class="modal-title"><i class="fa-solid fa-bell ms-2"></i>إضافة إنذار تعليمي</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form id="addWarningForm">
+          <div class="mb-3">
+            <label class="form-label">هوية الطالب</label>
+            <input type="text" id="warningStudentId" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">سبب الإنذار</label>
+            <input type="text" id="warningReason" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">الإجراء الحالي</label>
+            <select id="warningAction" class="form-select" required></select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">ملاحظات</label>
+            <textarea id="warningNotes" class="form-control" rows="2"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary w-100">إضافة الإنذار</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="staff.js"></script>
+</body>
+</html>
